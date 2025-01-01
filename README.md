@@ -1,7 +1,5 @@
 # ddev-basex
 
-[![tests](https://github.com/yourusername/ddev-basex/actions/workflows/tests.yml/badge.svg)](https://github.com/yourusername/ddev-basex/actions/workflows/tests.yml) ![project is maintained](https://img.shields.io/maintenance/yes/2024.svg)
-
 ## What is ddev-basex?
 
 This repository provides a [BaseX](https://basex.org) add-on for DDEV. BaseX is a robust XML database engine and XQuery processor.
