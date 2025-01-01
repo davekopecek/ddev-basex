@@ -1,0 +1,17 @@
+services:
+  basex:
+    container_name: ddev-${DDEV_SITENAME}-basex
+    image: quodatum/basexhttp:latest
+    restart: "no"
+    ports:
+      - "8984:8080"
+    volumes:
+      - "./basex/data:/srv/basex/data"
+      - "./basex/webapp:/srv/basex/webapp"
+      - "./basex/repo:/srv/basex/repo"
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+    environment:
+      - VIRTUAL_HOST=$DDEV_HOSTNAME
+      - HTTP_EXPOSE=8984:8080 
