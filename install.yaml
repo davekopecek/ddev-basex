@@ -5,6 +5,6 @@ project_files:
 post_install_commands:
   - |
     # Create directories and placeholder files
-    mkdir -p .ddev/basex/{data,webapp,repo}
+    mkdir -p .ddev/basex/{data,webapp/WEB-INF,repo}
     touch .ddev/basex/{data,webapp,repo}/.gitkeep
-    chmod 777 .ddev/basex/{data,webapp,repo} 
+    chmod -R 777 .ddev/basex/{data,webapp,repo} 
