@@ -1,12 +1,10 @@
 name: basex
 project_files:
   - docker-compose.basex.yaml
-  - basex/data/.gitkeep
-  - basex/webapp/.gitkeep
-  - basex/repo/.gitkeep
 
 post_install_commands:
   - |
-    #ensure directories exist and have correct permissions
+    # Create directories and placeholder files
     mkdir -p .ddev/basex/{data,webapp,repo}
+    touch .ddev/basex/{data,webapp,repo}/.gitkeep
     chmod 777 .ddev/basex/{data,webapp,repo} 

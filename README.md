@@ -6,6 +6,10 @@ This repository provides a [BaseX](https://basex.org) add-on for DDEV. BaseX is 
 
 ## Installation
 
+Until this add-on is officially released, you can install it directly from the repository:
+
+
+
 ```bash
 ddev add-on get davekopecek/ddev-basex
 ddev restart
