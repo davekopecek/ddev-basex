@@ -9,7 +9,7 @@ This repository provides a [BaseX](https://basex.org) add-on for DDEV. BaseX is 
 ## Installation
 
 ```bash
-ddev add-on get yourusername/ddev-basex
+ddev add-on get davekopecek/ddev-basex
 ddev restart
 ```
 
