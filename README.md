@@ -4,6 +4,14 @@
 
 This repository provides a [BaseX](https://basex.org) add-on for DDEV. BaseX is a robust XML database engine and XQuery processor.
 
+## Features
+
+- Based on the `quodatum/basexhttp` image
+- Supports multiple architectures (amd64, arm64, arm/v7)
+- Includes Saxon-HE for XSLT 3.0 support
+- Includes XMLresolver
+- Includes BaseX Web Application Server
+
 ## Installation
 
 Until this add-on is officially released, you can install it directly from the repository:
@@ -135,13 +143,6 @@ basex
 > EXIT
 ```
 
-## Features
-
-- Based on the `quodatum/basexhttp` image
-- Supports multiple architectures (amd64, arm64, arm/v7)
-- Includes Saxon-HE for XSLT 3.0 support
-- Includes XMLresolver
-
 ## Accessing the Container
 
 To SSH into the BaseX container:
@@ -165,6 +166,6 @@ ddev logs -s basex
 ddev logs -s basex -f
 ```
 
-**Contributed and maintained by [@yourusername](https://github.com/yourusername)**
+**Contributed and maintained by [@davekopecek](https://github.com/yourusername)**
 
 
