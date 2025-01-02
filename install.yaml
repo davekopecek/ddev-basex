@@ -1,10 +1,12 @@
 name: basex
 project_files:
   - docker-compose.basex.yaml
+  - basex-config.sh
+  - basex
 
 post_install_commands:
   - |
-    # Create directories and placeholder files
-    mkdir -p .ddev/basex/{data,webapp/WEB-INF,repo}
-    touch .ddev/basex/{data,webapp,repo}/.gitkeep
-    chmod -R 777 .ddev/basex/{data,webapp,repo} 
+    # Set permissions and ownership
+    OWNER=$(stat -c '%u:%g' .ddev/docker-compose.basex.yaml)
+    chmod -R 777 basex
+    chown -R $OWNER basex 
