@@ -4,8 +4,8 @@ services:
     container_name: ddev-${DDEV_SITENAME}-basex
     image: quodatum/basexhttp:latest
     restart: "no"
-    ports:
-      - "9984:8080"
+    expose:
+      - "8080"
     volumes:
       - basex-data:/srv/basex/data
       - basex-webapp:/srv/basex/webapp
@@ -17,12 +17,6 @@ services:
       - VIRTUAL_HOST=$DDEV_HOSTNAME
       - HTTP_EXPOSE=9984:8080
       - HTTPS_EXPOSE=9984:8080
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
-      interval: 2s
-      timeout: 5s
-      retries: 30
-      start_period: 10s
 
 volumes:
   basex-data:
