@@ -1,5 +1,8 @@
 # ddev-basex
 
+[![tests](https://github.com/davekopecek/ddev-basex/actions/workflows/tests.yml/badge.svg)](https://github.com/davekopecek/ddev-basex/actions/workflows/tests.yml) ![project is maintained](https://img.shields.io/maintenance/yes/2025.svg)
+
+
 ## What is ddev-basex?
 
 This repository provides a [BaseX](https://basex.org) add-on for DDEV. BaseX is a robust XML database engine and XQuery processor.
@@ -24,8 +27,7 @@ ddev restart
 ## Access
 
 The BaseX server is available at:
-- Web interface: `http://[project-name].ddev.site:9984`
-- HTTPS interface: `https://[project-name].ddev.site:9984`
+- Web interface: `https://[project-name].ddev.site:9984`
 - Default admin credentials: username `admin` with password `admin`
 
 Note: The port (9984) is required as the standard HTTP/HTTPS ports (80/443) are used by the main web container.
@@ -165,6 +167,41 @@ ddev logs -s basex
 # Follow BaseX logs in real-time
 ddev logs -s basex -f
 ```
+
+## Running Tests Locally
+
+To run the tests locally, you'll need:
+- [BATS (Bash Automated Testing System)](https://github.com/bats-core/bats-core)
+- DDEV installed and working
+- Docker running
+
+Install BATS:
+```bash
+# On MacOS
+brew install bats-core
+
+# On Linux
+git clone https://github.com/bats-core/bats-core.git
+cd bats-core
+./install.sh /usr/local
+```
+
+Run the tests:
+```bash
+# From the root of this repository
+bats tests/test.bats
+
+# To see more detailed output
+bats --verbose-run tests/test.bats
+```
+
+The tests will:
+1. Create a temporary DDEV project
+2. Install the BaseX add-on
+3. Verify the BaseX server is running and accessible
+4. Clean up all test resources
+
+Note: The tests may take a few minutes to run as they include starting DDEV and waiting for services to be ready.
 
 **Contributed and maintained by [@davekopecek](https://github.com/yourusername)**
 
