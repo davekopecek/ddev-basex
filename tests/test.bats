@@ -23,16 +23,14 @@ setup() {
   
   # In CI, ensure DDEV is configured properly
   if [ -n "${CI:-}" ]; then
-    # New way to configure router for CI
     ddev config global --web-environment="DDEV_ROUTER_BIND_ALL_INTERFACES=true"
+    ddev config global --web-environment="DDEV_HOST_WEBSERVER_PORT=8080"
+    ddev config global --web-environment="DDEV_HOST_HTTPS_PORT=8443"
     sleep 5
   fi
   
   cd "${TESTDIR}"
-  
-  # Configure project with environment-specific settings
   ddev config --project-name=${PROJNAME}
-  
   ddev start -y >/dev/null
 }
 
@@ -44,11 +42,13 @@ health_checks() {
     sleep 10
   fi
   
-  # Get the correct hostname based on environment
+  # Get the correct hostname and port based on environment
   if [ -n "${CI:-}" ]; then
     HOST="127.0.0.1"
+    PORT="8080"  # Use the configured port from setup
   else
     HOST="${PROJNAME}.ddev.site"
+    PORT="9984"
   fi
   
   echo "# Testing BaseX service..." >&3
@@ -57,10 +57,6 @@ health_checks() {
   
   if [ "$response" != "EXIT" ]; then
     echo "# BaseX service not responding correctly" >&3
-    echo "# Checking if BaseX container is running..." >&3
-    ddev exec "docker ps | grep basex" >&3
-    echo "# Checking BaseX logs..." >&3
-    ddev logs -s basex >&3
     return 1
   fi
   echo "# ✓ BaseX service test passed" >&3
@@ -75,9 +71,9 @@ health_checks() {
   
   echo "# Testing external interface..." >&3
   if [ -n "${CI:-}" ]; then
-    response=$(curl -s http://127.0.0.1:9984)
+    response=$(curl -s http://127.0.0.1:${PORT})
   else
-    response=$(curl -s https://${PROJNAME}.ddev.site:9984)
+    response=$(curl -s http://${HOST}:9984)
   fi
   
   if ! grep -q "BaseX" <<< "$response"; then
