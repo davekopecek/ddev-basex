@@ -6,6 +6,11 @@ setup() {
   export PROJNAME=test-basex
   export DDEV_NON_INTERACTIVE=true
   
+  # Ensure we're running with the correct Docker settings in CI
+  if [ -n "${CI:-}" ]; then
+    ddev config global --router-bind-all-interfaces
+  fi
+  
   # Clean up any existing DDEV projects
   ddev poweroff >/dev/null 2>&1 || true
   ddev delete -Oy ${PROJNAME} >/dev/null 2>&1 || true
@@ -18,6 +23,13 @@ setup() {
 health_checks() {
   # Wait for BaseX to be ready
   sleep 10
+  
+  # Get the correct hostname based on environment
+  if [ -n "${CI:-}" ]; then
+    HOST="127.0.0.1"
+  else
+    HOST="${PROJNAME}.ddev.site"
+  fi
   
   echo "# Testing BaseX service..." >&3
   full_output=$(ddev exec -s basex "basex -c 'HELP'")
@@ -42,7 +54,12 @@ health_checks() {
   echo "# ✓ Internal interface test passed" >&3
   
   echo "# Testing external interface..." >&3
-  response=$(curl -s https://${PROJNAME}.ddev.site:9984)
+  if [ -n "${CI:-}" ]; then
+    response=$(curl -s http://127.0.0.1:9984)
+  else
+    response=$(curl -s https://${PROJNAME}.ddev.site:9984)
+  fi
+  
   if ! grep -q "BaseX" <<< "$response"; then
     echo "# BaseX external interface not responding" >&3
     return 1
@@ -86,6 +103,28 @@ teardown() {
   sleep 10
   
   # Now run health checks
+  echo "# Running health checks..." >&3
+  health_checks
+}
+
+@test "install from GitHub repository" {
+  set -eu -o pipefail
+  cd ${TESTDIR} || ( printf "unable to cd to ${TESTDIR}\n" && exit 1 )
+  echo "# Testing installation from GitHub repository..." >&3
+  
+  # Configure and start DDEV
+  ddev config --project-name=${PROJNAME}
+  ddev start
+  
+  # Install from your GitHub repository
+  echo "# Installing add-on from GitHub..." >&3
+  ddev add-on get davekopecek/ddev-basex-service
+  
+  # Restart after installation
+  echo "# Restarting DDEV..." >&3
+  ddev restart
+  
+  # Run health checks
   echo "# Running health checks..." >&3
   health_checks
 }

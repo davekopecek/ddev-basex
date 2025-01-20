@@ -1,42 +1,41 @@
-name: tests
+name: Tests
+
 on:
-  pull_request:
   push:
     branches: [ main ]
-
-  schedule:
-  - cron: '25 08 * * *'
-
-  workflow_dispatch:
-    inputs:
-      debug_enabled:
-        type: boolean
-        description: Debug with tmate
-        required: false
-        default: false
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
-# This is required for "gautamkrishnar/keepalive-workflow", see "ddev/github-action-add-on-test"
-permissions:
-  actions: write
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  tests:
-    strategy:
-      matrix:
-        ddev_version: [stable, HEAD]
-      fail-fast: false
-
+  test:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - uses: ddev/github-action-add-on-test@v2
+      - uses: actions/checkout@v4
+      
+      - name: Install DDEV
+        run: |
+          curl -LO https://raw.githubusercontent.com/drud/ddev/master/scripts/install_ddev.sh
+          bash install_ddev.sh
+          rm install_ddev.sh
+      
+      - name: Install BATS
+        run: |
+          git clone https://github.com/bats-core/bats-core.git
+          cd bats-core
+          sudo ./install.sh /usr/local
+          cd ..
+          rm -rf bats-core
+      
+      - name: Run Tests
+        run: |
+          mkdir -p ~/tmp
+          bats tests/test.bats
+
+      - name: Upload test logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
         with:
-          ddev_version: ${{ matrix.ddev_version }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-          debug_enabled: ${{ github.event.inputs.debug_enabled }}
-          addon_repository: ${{ env.GITHUB_REPOSITORY }}
-          addon_ref: ${{ env.GITHUB_REF }}
+          name: test-logs
+          path: ~/tmp/test-basex/
+          retention-days: 5

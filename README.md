@@ -1,6 +1,6 @@
 # ddev-basex
 
-[![tests](https://github.com/davekopecek/ddev-basex/actions/workflows/tests.yml/badge.svg)](https://github.com/davekopecek/ddev-basex/actions/workflows/tests.yml) ![project is maintained](https://img.shields.io/maintenance/yes/2025.svg)
+[![tests](https://github.com/davekopecek/ddev-basex/actions/workflows/tests.yaml/badge.svg)](https://github.com/davekopecek/ddev-basex/actions/workflows/tests.yaml) ![project is maintained](https://img.shields.io/maintenance/yes/2025.svg)
 
 
 ## What is ddev-basex?
