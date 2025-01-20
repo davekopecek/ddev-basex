@@ -6,8 +6,9 @@ setup() {
   export PROJNAME=test-basex
   export DDEV_NON_INTERACTIVE=true
   
-  # Ensure we're running with the correct Docker settings in CI
+  # Clean up any existing processes that might be using our ports
   if [ -n "${CI:-}" ]; then
+    sudo lsof -ti:9984 | xargs -r sudo kill -9
     ddev config global --router-bind-all-interfaces
   fi
   
@@ -16,13 +17,24 @@ setup() {
   ddev delete -Oy ${PROJNAME} >/dev/null 2>&1 || true
   
   cd "${TESTDIR}"
-  ddev config --project-name=${PROJNAME}
+  
+  # Configure project with environment-specific settings
+  if [ -n "${CI:-}" ]; then
+    ddev config --project-name=${PROJNAME} --router-bind-all-interfaces
+  else
+    ddev config --project-name=${PROJNAME}
+  fi
+  
   ddev start -y >/dev/null
 }
 
 health_checks() {
-  # Wait for BaseX to be ready
-  sleep 10
+  # Wait longer in CI environment
+  if [ -n "${CI:-}" ]; then
+    sleep 30  # Give more time for services to stabilize in CI
+  else
+    sleep 10
+  fi
   
   # Get the correct hostname based on environment
   if [ -n "${CI:-}" ]; then

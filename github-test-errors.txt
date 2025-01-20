@@ -1,0 +1,259 @@
+3m 25s
+Run mkdir -p ~/tmp
+1..2
+# Configuring DDEV project...
+# Installing add-on...
+# Restarting DDEV...
+# Waiting for BaseX to be ready...
+# Running health checks...
+# Testing BaseX service...
+# ✓ BaseX service test passed
+# Testing internal interface...
+# ✓ Internal interface test passed
+# Testing external interface...
+# BaseX external interface not responding
+not ok 1 install from directory
+# (from function `health_checks' in file tests/test.bats, line 65,
+#  in test file tests/test.bats, line 107)
+#   `health_checks' failed
+# developer-mode=false
+# fail-on-hook-fail=false
+# instrumentation-opt-in=false
+# instrumentation-queue-size=0
+# instrumentation-reporting-interval=0s
+# instrumentation-user=
+# internet-detection-timeout-ms=3000
+# last-started-version=v0.0
+# letsencrypt-email=
+# mailpit-http-port=8025
+# mailpit-https-port=8026
+# mkcert-caroot=/home/runner/.local/share/mkcert
+# no-bind-mounts=false
+# omit-containers=[]
+# performance-mode=none
+# project-tld=ddev.site
+# required-docker-compose-version=v2.31.0
+# router-bind-all-interfaces=true
+# router-http-port=80
+# router-https-port=443
+# simple-formatting=false
+# table-style=default
+# traefik-monitor-port=10999
+# use-docker-compose-from-path=false
+# use-hardened-images=false
+# use-letsencrypt=false
+# wsl2-no-windows-hosts-mgt=false
+# xdebug-ide-location=
+# Creating a new DDEV project config in the current directory (/home/runner/tmp/test-basex)
+# Once completed, your configuration will be written to /home/runner/tmp/test-basex/.ddev/config.yaml
+# 
+# Configuring a 'php' project named 'test-basex' with docroot '' at '/home/runner/tmp/test-basex'.
+# For full details use 'ddev describe'.
+# Configuration complete. You may now run 'ddev start'.
+# ssh-agent container is running: If you want to add authentication to the ssh-agent container, run 'ddev auth ssh' to enable your keys.
+# .....You are reconfiguring the project at /home/runner/tmp/test-basex.
+# The existing configuration will be updated and replaced.
+# Configuring a 'php' project named 'test-basex' with docroot '' at '/home/runner/tmp/test-basex'.
+# For full details use 'ddev describe'.
+# Configuration complete. You may now run 'ddev start'.
+# It looks like you have a new DDEV release.
+# May we send anonymous DDEV usage statistics and errors?
+# To know what we will see please take a look at
+# https://ddev.readthedocs.io/en/stable/users/usage/diagnostics/#opt-in-usage-information
+# Permission to beam up? [Y/n] (yes): Starting test-basex...
+# Building project images...
+# .Project images built in 1s.
+#  Container ddev-test-basex-web  Recreate
+#  Container ddev-test-basex-db  Recreate
+#  Container ddev-test-basex-db  Recreated
+#  Container ddev-test-basex-web  Recreated
+#  Container ddev-test-basex-web  Started
+#  Container ddev-test-basex-db  Started
+# Waiting for containers to become ready: [web db]
+# Starting ddev-router if necessary...
+#  Container ddev-router  Running
+# Successfully started test-basex
+# Your project can be reached at https://test-basex.ddev.site
+# See 'ddev describe' for alternate URLs.
+# 
+# Installing project-level components:
+# 👍 docker-compose.basex.yaml
+# 👍 basex-config.sh
+# 👍 basex/repo/.gitmanaged
+# 👍 basex/webapp/.gitmanaged
+# 
+# Installed DDEV add-on /home/runner/work/ddev-basex/ddev-basex/tests/.., use `ddev restart` to enable.
+# Installed basex: from /home/runner/work/ddev-basex/ddev-basex/tests/..
+# Restarting project test-basex...
+#  Container ddev-test-basex-db  Stopped
+#  Container ddev-test-basex-web  Stopped
+#  Container ddev-test-basex-db  Stopped
+#  Container ddev-test-basex-web  Stopped
+#  Container ddev-test-basex-db  Removed
+#  Container ddev-test-basex-web  Removed
+#  Network ddev-test-basex_default  Removed
+# Building project images...
+# ...........Project images built in 11s.
+#  Network ddev-test-basex_default  Created
+#  Volume "ddev-test-basex_basex-data"  Created
+#  Volume "ddev-test-basex_basex-webapp"  Created
+#  Volume "ddev-test-basex_basex-repo"  Created
+#  Container ddev-test-basex-db  Created
+#  Container ddev-test-basex-web  Created
+#  Container ddev-test-basex-basex  Created
+#  Container ddev-test-basex-basex  Started
+#  Container ddev-test-basex-web  Started
+#  Container ddev-test-basex-db  Started
+# Waiting for containers to become ready: [web db]
+# Starting ddev-router if necessary...
+#  Container ddev-router  Created
+#  Container ddev-router  Started
+# Waiting 120s for additional project containers [ddev-test-basex-basex] to become ready...
+# Restarted test-basex
+# Your project can be reached at https://test-basex.ddev.site
+# See 'ddev describe' for alternate URLs.
+# Testing installation from GitHub repository...
+# Installing add-on from GitHub...
+# Restarting DDEV...
+not ok 2 install from GitHub repository
+# (in test file tests/test.bats, line 125)
+#   `ddev restart' failed
+# developer-mode=false
+# fail-on-hook-fail=false
+# instrumentation-opt-in=true
+# instrumentation-queue-size=0
+# instrumentation-reporting-interval=0s
+# instrumentation-user=
+# internet-detection-timeout-ms=3000
+# last-started-version=v1.24.1
+# letsencrypt-email=
+# mailpit-http-port=8025
+# mailpit-https-port=8026
+# mkcert-caroot=/home/runner/.local/share/mkcert
+# no-bind-mounts=false
+# omit-containers=[]
+# performance-mode=none
+# project-tld=ddev.site
+# required-docker-compose-version=v2.31.0
+# router-bind-all-interfaces=true
+# router-http-port=80
+# router-https-port=443
+# simple-formatting=false
+# table-style=default
+# traefik-monitor-port=10999
+# use-docker-compose-from-path=false
+# use-hardened-images=false
+# use-letsencrypt=false
+# wsl2-no-windows-hosts-mgt=false
+# xdebug-ide-location=
+# Creating a new DDEV project config in the current directory (/home/runner/tmp/test-basex)
+# Once completed, your configuration will be written to /home/runner/tmp/test-basex/.ddev/config.yaml
+# 
+# Configuring a 'php' project named 'test-basex' with docroot '' at '/home/runner/tmp/test-basex'.
+# For full details use 'ddev describe'.
+# Configuration complete. You may now run 'ddev start'.
+# ssh-agent container is running: If you want to add authentication to the ssh-agent container, run 'ddev auth ssh' to enable your keys.
+# .You are reconfiguring the project at /home/runner/tmp/test-basex.
+# The existing configuration will be updated and replaced.
+# Configuring a 'php' project named 'test-basex' with docroot '' at '/home/runner/tmp/test-basex'.
+# For full details use 'ddev describe'.
+# Configuration complete. You may now run 'ddev start'.
+# Starting test-basex...
+# Building project images...
+# .Project images built in 1s.
+#  Container ddev-test-basex-web  Recreate
+#  Container ddev-test-basex-db  Recreate
+#  Container ddev-test-basex-db  Recreated
+#  Container ddev-test-basex-web  Recreated
+#  Container ddev-test-basex-web  Started
+#  Container ddev-test-basex-db  Started
+# Waiting for containers to become ready: [web db]
+# Starting ddev-router if necessary...
+#  Container ddev-router  Running
+# Successfully started test-basex
+# Your project can be reached at https://test-basex.ddev.site
+# See 'ddev describe' for alternate URLs.
+# Installing davekopecek/ddev-basex:v0.0.5
+# 
+# Installing project-level components:
+# 👍 docker-compose.basex.yaml
+# 👍 basex-config.sh
+# 👍 basex/repo/.gitmanaged
+# 👍 basex/webapp/.gitmanaged
+# 
+# Installed DDEV add-on davekopecek/ddev-basex, use `ddev restart` to enable.
+# Please read instructions for this add-on at the source repo at
+# https://github.com/davekopecek/ddev-basex
+# Please file issues and create pull requests there to improve it.
+# Installed basex:v0.0.5 from davekopecek/ddev-basex
+# Restarting project test-basex...
+#  Container ddev-test-basex-db  Stopped
+#  Container ddev-test-basex-web  Stopped
+#  Container ddev-test-basex-web  Stopped
+#  Container ddev-test-basex-db  Stopped
+#  Container ddev-test-basex-db  Removed
+#  Container ddev-test-basex-web  Removed
+#  Network ddev-test-basex_default  Removed
+# latest: Pulling from quodatum/basexhttp
+# de44b265507a: Already exists
+# b8102a0b8aeb: Already exists
+# e948b4564476: Already exists
+# 584d1027889d: Already exists
+# dac37ec29a9a: Already exists
+# dffce1e1e180: Pulling fs layer
+# 804cb92c84e2: Pulling fs layer
+# 12d917933e12: Pulling fs layer
+# 62578180eafd: Pulling fs layer
+# 4f4fb700ef54: Pulling fs layer
+# 62578180eafd: Waiting
+# 4f4fb700ef54: Waiting
+# 804cb92c84e2: Verifying Checksum
+# 804cb92c84e2: Download complete
+# dffce1e1e180: Verifying Checksum
+# dffce1e1e180: Download complete
+# 12d917933e12: Download complete
+# 4f4fb700ef54: Verifying Checksum
+# 4f4fb700ef54: Download complete
+# 62578180eafd: Download complete
+# dffce1e1e180: Pull complete
+# 804cb92c84e2: Pull complete
+# 12d917933e12: Pull complete
+# 62578180eafd: Pull complete
+# 4f4fb700ef54: Pull complete
+# Digest: sha256:cce33f88eba5877f05e7a010bb374b2dade2c68765c936434b33cab806f62236
+# Status: Downloaded newer image for quodatum/basexhttp:latest
+# docker.io/quodatum/basexhttp:latest
+# Building project images...
+# .Project images built in 1s.
+#  Network ddev-test-basex_default  Created
+#  Volume "ddev-test-basex_basex-webapp"  Created
+#  Volume "ddev-test-basex_basex-repo"  Created
+#  Volume "ddev-test-basex_basex-data"  Created
+#  Container ddev-test-basex-db  Created
+#  Container ddev-test-basex-web  Created
+#  Container ddev-test-basex-basex  Created
+#  Container ddev-test-basex-basex  Started
+#  Container ddev-test-basex-web  Started
+#  Container ddev-test-basex-db  Started
+# Waiting for containers to become ready: [web db]
+# Starting ddev-router if necessary...
+# Failed to restart test-basex: unable to listen on required ports, port 9984 is already in use,
+# Troubleshooting suggestions at https://ddev.readthedocs.io/en/stable/users/usage/troubleshooting/#unable-listen
+Error: Process completed with exit code 1.
+0s
+Run actions/upload-artifact@v4
+  
+Warning: No files were found with the provided path: ~/tmp/test-basex/. No artifacts will be uploaded.
+0s
+Post job cleanup.
+/usr/bin/git version
+git version 2.47.1
+Temporarily overriding HOME='/home/runner/work/_temp/107deee1-cfa3-452e-a60a-11c8e45f9ab4' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+/usr/bin/git config --global --add safe.directory /home/runner/work/ddev-basex/ddev-basex
+/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+http.https://github.com/.extraheader
+/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
