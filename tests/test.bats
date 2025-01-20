@@ -116,9 +116,9 @@ teardown() {
   ddev config --project-name=${PROJNAME}
   ddev start
   
-  # Install from your GitHub repository
+  # Install from your GitHub repository - using correct repository name
   echo "# Installing add-on from GitHub..." >&3
-  ddev add-on get davekopecek/ddev-basex-service
+  ddev add-on get davekopecek/ddev-basex
   
   # Restart after installation
   echo "# Restarting DDEV..." >&3
@@ -129,11 +129,25 @@ teardown() {
   health_checks
 }
 
+# TODO: Uncomment and update once this becomes an official DDEV add-on
 # @test "install from release" {
 #   set -eu -o pipefail
 #   cd ${TESTDIR} || ( printf "unable to cd to ${TESTDIR}\n" && exit 1 )
-#   echo "# ddev add-on get ddev/ddev-lucee with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-#   ddev add-on get ddev/ddev-lucee
-#   ddev restart >/dev/null
+#   echo "# Testing installation from release..." >&3
+#   
+#   # Configure and start DDEV
+#   ddev config --project-name=${PROJNAME}
+#   ddev start
+#   
+#   # Install from GitHub release
+#   echo "# Installing add-on from release..." >&3
+#   ddev add-on get ddev/ddev-basex
+#   
+#   # Restart after installation
+#   echo "# Restarting DDEV..." >&3
+#   ddev restart
+#   
+#   # Run health checks
+#   echo "# Running health checks..." >&3
 #   health_checks
 # }
