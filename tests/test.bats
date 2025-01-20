@@ -1,3 +1,11 @@
+check_port() {
+  echo "# Checking port 9984..." >&3
+  echo "# netstat output:" >&3
+  netstat -an | grep 9984 >&3 2>&1 || echo "# Port 9984 is free (netstat)" >&3
+  echo "# docker output:" >&3
+  docker ps | grep 9984 >&3 2>&1 || echo "# No docker containers using port 9984" >&3
+}
+
 setup() {
   set -eu -o pipefail
   export DIR="$( cd "$( dirname "$BATS_TEST_FILENAME" )" >/dev/null 2>&1 && pwd )/.."
@@ -6,15 +14,19 @@ setup() {
   export PROJNAME=test-basex
   export DDEV_NON_INTERACTIVE=true
   
-  # Clean up any existing processes that might be using our ports
-  if [ -n "${CI:-}" ]; then
-    sudo lsof -ti:9984 | xargs -r sudo kill -9
-    ddev config global --router-bind-all-interfaces
-  fi
+  # Debug: Check port status before setup
+  check_port
   
-  # Clean up any existing DDEV projects
+  # Clean up any existing DDEV projects and ensure all services are stopped
   ddev poweroff >/dev/null 2>&1 || true
   ddev delete -Oy ${PROJNAME} >/dev/null 2>&1 || true
+  
+  # In CI, ensure DDEV is configured properly
+  if [ -n "${CI:-}" ]; then
+    ddev config global --router-bind-all-interfaces
+    # Wait a moment to ensure cleanup is complete
+    sleep 5
+  fi
   
   cd "${TESTDIR}"
   
@@ -83,26 +95,33 @@ teardown() {
   set -eu -o pipefail
   cd ${TESTDIR} || ( printf "unable to cd to ${TESTDIR}\n" && exit 1 )
   
-  # Clean up BaseX data
-  ddev exec -s basex "rm -rf /srv/basex/data/*" >/dev/null 2>&1 || true
+  # Stop all DDEV projects and remove the test project
+  ddev poweroff >/dev/null 2>&1 || true
+  ddev delete -Oy ${PROJNAME} >/dev/null 2>&1 || true
   
-  # Remove project and volumes
-  ddev delete -Oy ${PROJNAME} >/dev/null 2>&1
+  # Clean up BaseX data and volumes
   docker volume rm -f $(docker volume ls -q | grep ${PROJNAME}) >/dev/null 2>&1 || true
   
+  # Remove test directory
   [ "${TESTDIR}" != "" ] && rm -rf ${TESTDIR}
+  
+  # Wait for TIME_WAIT to clear (check every 2 seconds for up to 30 seconds)
+  for i in {1..15}; do
+    if ! netstat -an | grep 9984 | grep TIME_WAIT > /dev/null; then
+      break
+    fi
+    echo "# Waiting for port 9984 TIME_WAIT to clear (attempt $i)..." >&3
+    sleep 2
+  done
+  
+  # Debug: Check port status after cleanup
+  check_port
 }
 
 @test "install from directory" {
-  set -eu -o pipefail
   cd ${TESTDIR}
   
-  # First configure and start DDEV
-  echo "# Configuring DDEV project..." >&3
-  ddev config --project-name=${PROJNAME}
-  ddev start
-  
-  # Then install the add-on
+  # Install the add-on
   echo "# Installing add-on..." >&3
   ddev add-on get ${DIR}
   
@@ -120,23 +139,21 @@ teardown() {
 }
 
 @test "install from GitHub repository" {
-  set -eu -o pipefail
-  cd ${TESTDIR} || ( printf "unable to cd to ${TESTDIR}\n" && exit 1 )
-  echo "# Testing installation from GitHub repository..." >&3
+  cd ${TESTDIR}
   
-  # Configure and start DDEV
-  ddev config --project-name=${PROJNAME}
-  ddev start
-  
-  # Install from your GitHub repository - using correct repository name
+  # Install the add-on
   echo "# Installing add-on from GitHub..." >&3
   ddev add-on get davekopecek/ddev-basex
   
-  # Restart after installation
+  # Restart after add-on installation
   echo "# Restarting DDEV..." >&3
   ddev restart
   
-  # Run health checks
+  # Wait for BaseX to be ready
+  echo "# Waiting for BaseX to be ready..." >&3
+  sleep 10
+  
+  # Now run health checks
   echo "# Running health checks..." >&3
   health_checks
 }

@@ -4,6 +4,7 @@ services:
     container_name: ddev-${DDEV_SITENAME}-basex
     build:
       context: https://github.com/davekopecek/basex-docker.git#main
+    image: davekopecek/basex:latest
     restart: "no"
     expose:
       - "8080"
