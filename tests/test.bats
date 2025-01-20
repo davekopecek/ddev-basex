@@ -23,19 +23,15 @@ setup() {
   
   # In CI, ensure DDEV is configured properly
   if [ -n "${CI:-}" ]; then
-    ddev config global --router-bind-all-interfaces
-    # Wait a moment to ensure cleanup is complete
+    # New way to configure router for CI
+    ddev config global --web-environment="DDEV_ROUTER_BIND_ALL_INTERFACES=true"
     sleep 5
   fi
   
   cd "${TESTDIR}"
   
   # Configure project with environment-specific settings
-  if [ -n "${CI:-}" ]; then
-    ddev config --project-name=${PROJNAME} --router-bind-all-interfaces
-  else
-    ddev config --project-name=${PROJNAME}
-  fi
+  ddev config --project-name=${PROJNAME}
   
   ddev start -y >/dev/null
 }
